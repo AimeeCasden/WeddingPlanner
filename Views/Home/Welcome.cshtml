@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        .custab {
+            border: 1px solid #ccc;
+            padding: 5px;
+            margin: 5% 0;
+            box-shadow: 3px 3px 2px #ccc;
+            transition: 0.5s;
+        }
+
+        .custab:hover {
+            box-shadow: 3px 3px 0px transparent;
+            transition: 0.5s;
+        }
+
+        body {
+            background-image: url("/images/floral.jpg");
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .container {
+            margin-top: 5%;
+            width: 800%;
+        }
+
+        .container table {
+            margin-left: 15%;
+        }
+
+        .btn-danger {
+            background-color: powderblue;
+        }
+
+        h1 {
+            color: lightgoldenrodyellow;
+
+        }
+
+        button {
+            display: inline-block;
+            padding: 6px 12px;
+            background: rgb(220, 220, 220);
+            font-weight: bold;
+            color: rgb(120, 120, 120);
+            border: none;
+            outline: none;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: ease .3s;
+        }
+
+        button a {
+            color: grey;
+        }
+
+        button:hover {
+            background: powderblue;
+            color: #ffffff;
+        }
+
+        th {
+            color: grey;
+        }
+
+        td {
+            color: grey;
+        }
+    </style>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Welcome!</title>
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="main.css">
+    <script src="main.js"></script>
+</head>
+
+<body>
+    <button><a href="clear">Logout</a></button>
+    <button><a href="AddWedding">Add a New Wedding</a></button>
+    <h1>Welcome To The Wedding Planner</h1>
+    <div class="container">
+        <div class="row col-md-6 col-md-offset-2 custyle">
+            <table class="table table-striped custab">
+                <thead>
+                    <tr>
+                        <th>Wedding</th>
+                        <th>Date</th>
+                        <th>Guest</th>
+                        <th class="text-center">Action</th>
+                    </tr>
+                </thead>
+                @foreach(var x in ViewBag.EveryWedding)
+                {
+                    bool going = false;
+                <tr>
+                    <td>@x.WedderOne & @x.WedderTwo</td>
+                    <td>@x.Date.ToString("dd/MM/yyyy")</td>
+                    <td>@x.AttendingGuests.Count</td>
+                    <td class="text-center">
+
+                        @foreach (var y in @x.AttendingGuests)
+                        {
+                            <!-- IF PERSON IN SESSION IS IN A LIST OF THE PEOPLE GOING TO THE WEDDING AND CHECKS THE ID OF WHOMEVER IS GOING TO THE WEDDING AND IF IT EQUALS THE ID OF THE PERSON IN SESSION THEN THEY ARE GOING 2 DA WEDDIN -->
+                            @if(ViewBag.GuestId == @y.GuestId)
+                            {
+                                going = true;
+                            }
+                            else
+                            {
+                                going = false;
+                            }
+                        }
+                        
+                            @if(ViewBag.GuestId == @x.GuestId)
+                            {
+                                
+                                <a href="/ViewWedding/@x.WeddingId"
+                                class="btn btn-info btn-xs"><span class="glyphicon glyphicon-remove"></span>View</a>
+                                <a href="/Delete/@x.WeddingId"
+                                class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span>DELETE</a>
+                                
+                            }
+                            else if(going == true)
+                            {
+                                <a href="/ViewWedding/@x.WeddingId"
+                                class="btn btn-info btn-xs"><span class="glyphicon glyphicon-remove"></span>View</a>
+                                <a href="/unRSVP/@x.WeddingId"
+                                class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> NOT GOING</a>
+                            }
+                            else if(going == false)
+                            {
+                                <a href="/ViewWedding/@x.WeddingId"
+                                class="btn btn-info btn-xs"><span class="glyphicon glyphicon-search"></span>View</a>
+                                <a href="/RSVP/@x.WeddingId"
+                                class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-thumbs-up"></span>RSVP</a>
+                            }
+                           
+                    </td>
+                </tr>
+                }
+            </table>
+        </div>
+    </div>
+
+</body>
+
+</html>

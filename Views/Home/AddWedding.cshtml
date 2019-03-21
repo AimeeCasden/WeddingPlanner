@@ -1,0 +1,170 @@
+@model Wedding
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+         body {
+  background-image: url("/images/floral.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+h1{
+    font-family: sans-serif;
+    text-align: center;
+    color: black;
+    
+
+}
+form {
+  width: 60%;
+  margin: 60px auto;
+  background: #efefef;
+  padding: 60px 120px 80px 120px;
+  text-align: center;
+  -webkit-box-shadow: 2px 2px 3px rgba(0,0,0,0.1);
+  box-shadow: 2px 2px 3px rgba(0,0,0,0.1);
+  border: 5px outset powderblue;
+}
+label {
+  display: block;
+  position: relative;
+  margin: 40px 0px;
+}
+.label-txt {
+  position: absolute;
+  top: -1.6em;
+  padding: 10px;
+  font-family: sans-serif;
+  font-size: .8em;
+  letter-spacing: 1px;
+  color: rgb(120,120,120);
+  transition: ease .3s;
+}
+.input {
+  width: 100%;
+  padding: 10px;
+  background: transparent;
+  border: none;
+  outline: none;
+}
+
+.line-box {
+  position: relative;
+  width: 100%;
+  height: 2px;
+  background: #BCBCBC;
+}
+
+.line {
+  position: absolute;
+  width: 0%;
+  height: 2px;
+  top: 0px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: pink;
+  transition: ease .6s;
+}
+
+.input:focus + .line-box .line {
+  width: 100%;
+}
+
+.label-active {
+  top: -3em;
+}
+
+button {
+  display: inline-block;
+  padding: 12px 24px;
+  background: rgb(220,220,220);
+  font-weight: bold;
+  color: rgb(120,120,120);
+  border: none;
+  outline: none;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: ease .3s;
+}
+
+button:hover {
+  background: #8BC34A;
+  color: #ffffff;
+}
+a{
+    font-family: sans-serif;
+}
+
+    </style>
+    <script>
+        $(document).ready(function(){
+
+  $('.input').focus(function(){
+    $(this).parent().find(".label-txt").addClass('label-active');
+  });
+
+  $(".input").focusout(function(){
+    if ($(this).val() == '') {
+      $(this).parent().find(".label-txt").removeClass('label-active');
+    };
+  });
+
+});
+    </script>
+    </style>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Add Your Wedding</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="main.css">
+    <script src="main.js"></script>
+</head>
+<body>
+    <form asp-action="CreateWedding" asp-controller="Home" method="post">
+        <h3>Add Wedding</h3>
+        <br><br>
+  <label asp-for="WedderOne">
+    <p class="label-txt">WEDDER ONE</p>
+    <input asp-validation-for="WedderOne" asp-for="WedderOne" type="text" class="input">
+    <div class="line-box">
+      <div class="line"></div>
+    </div>
+  </label>
+  <div>
+      <span asp-validation-for="WedderOne"></span>
+  </div>
+
+  <label asp-for="WedderTwo">
+    <p class="label-txt">WEDDER TWO</p>
+    <input asp-validation-for="WedderTwo" asp-for="WedderTwo" type="text" class="input">
+    <div class="line-box">
+      <div class="line"></div>
+    </div>
+  </label>
+  <div>
+      <span asp-validation-for="WedderTwo"></span>
+  </div>
+  <label asp-for="Date">
+    <p class="label-txt">WEDDING DATE</p>
+    <input asp-validation-for="Date" asp-for="Date" type="text" class="input">
+    <div class="line-box">
+      <div class="line"></div>
+    </div>
+  </label>
+  <div>
+      <span asp-validation-for="Date"></span>
+  </div>
+  <label asp-for="Location">
+    <p class="label-txt">LOCATION</p>
+    <input asp-validation="Location" asp-for="Location" type="text" class="input">
+    <div class="line-box">
+      <div class="line"></div>
+    </div>
+  </label>
+  <div>
+      <span asp-validation-for="Location"></span>
+  </div>
+  <button type="submit">submit</button>
+</form>
+</body>
+</html>
